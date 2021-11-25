@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="component_request_form" model="ir.ui.view">
+        <field name="name">component.request.form</field>
+        <field name="model">component.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_approve" name="action_approve"
+                            string="Approve" type="object" class="btn-primary"
+                            states="new"
+                            groups="components_request.group_req_manager"/>
+                    <button id="button_confirm" name="action_confirm"
+                            string="Confirm" type="object" class="btn-primary"
+                            states="approved"
+                            groups="components_request.group_req_head"/>
+                    <button id="button_cancel" name="action_cancel"
+                            string="Cancel" type="object"
+                            states="approved,confirmed"
+                            groups="components_request.group_req_head"/>
+                    <button id="button_create" name="action_create_quotation"
+                            string="Create RFQ" type="object"
+                            class="btn-primary" states="confirmed"
+                            groups="components_request.group_req_head"/>
+<!--                            attrs="{'invisible': [('requisition_action', '=', 'internal transfer')]}"/>-->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name_seq" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="first">
+                            <field name="employee_id"/>
+                            <field name="requisition_date"/>
+                        </group>
+                        <group name="second">
+                            <field name="department_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Requisition Lines">
+                            <field name="request_line_ids">
+                                <tree editable="bottom">
+                                    <field name="requisition_action"/>
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="product_price"/>
+                                    <field name="partner_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="component_request_list" model="ir.ui.view">
+        <field name="name">component.request.tree</field>
+        <field name="model">component.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name_seq" readonly="1"/>
+                <field name="employee_id"/>
+                <field name="requisition_date"/>
+                <field name="department_id"/>
+                <field name="state"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="request_action" model="ir.actions.act_window">
+        <field name="name">Components Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">component.request</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your Component Request here!
+            </p>
+        </field>
+
+    </record>
+
+    <menuitem id="request_components_root"
+              name="Components Requisition"
+              action="request_action"
+              sequence="10"/>
+    <menuitem id="request_components"
+              name="Components Request"
+              action="request_action"
+              parent="request_components_root"
+              sequence="10"/>
+
+</odoo>

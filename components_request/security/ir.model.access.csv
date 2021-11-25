@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_component_request,access.component.request,model_component_request,base.group_user,1,1,0,1
+access_component_requisition_lines,access.component.requisition.lines,model_component_requisition_lines,base.group_user,1,1,1,1
+access_req_user,access.req.user,components_request.model_component_request,group_req_user,1,1,1,1
+access_req_manager,access.req.manager,components_request.model_component_request,group_req_manager,1,1,0,1
+access_req_head,access.req.head,components_request.model_component_request,group_req_head,1,1,0,1
+
